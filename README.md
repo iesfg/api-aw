@@ -1,5 +1,6 @@
-# mean-stack-registration-login-example
 
-MEAN Stack User Registration and Login Example & Tutorial
+api aw ies-fg
 
-To see a demo and further details go to http://jasonwatmore.com/post/2015/12/09/mean-stack-user-registration-and-login-example-tutorial
+Esta api está indicada para pruebas de registro, login y consulta de perfil de los desarrollos web de AW.
+
+Es una mean-stack (mongo, express, angular, node). 100% javascript.

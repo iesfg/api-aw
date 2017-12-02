@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Servicio Registro/Login</title>
+</head>
+
+<body>
+<div>
+    <button id="register">Registrar</button>
+    <button id="authenticateOk">Login Ok</button>
+    <button id="getUser">Obtener usuario</button>
+    <button id="logout">Logout</button>
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    var host='http://127.0.0.1:3000';
+
+    $(document).ready(function() {
+        $('#register').click(function() {
+            $.ajax({
+                type: "POST",
+                url: host+"/api/users/register",
+                data: {
+                    username: "Pepito",
+                    password: "Grillo"
+                },
+                success: function(data) {
+                    alert('Registro: ' + data);
+                },
+                error: function() {
+                    alert("Registro fallido");
+                }
+            });
+        });
+        $('#authenticateOk').click(function() {
+            $.ajax({
+                type: "POST",
+                url: host+"/api/users/authenticate",
+                data: {
+                    username: "Pepito",
+                    password: "Grillo"
+                },
+                success: function(data) {
+                    localStorage.token = data.token;
+                    localStorage.userid = data.id
+                    alert('Obtienes token de login del servidor! Token: ' + data.token);
+                },
+                error: function() {
+                    alert("Login fallido");
+                }
+            });
+        });
+        $('#getUser').click(function() {
+            $.ajax({
+                type: 'GET',
+                url: host+'/api/users/userprofile/',
+                beforeSend: function(xhr) {
+                    if (localStorage.token) {
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+                    }
+                },
+                success: function(data) {
+                    alert('Ha accedido a datos del usuairo ' + data.username + '!');
+                },
+                error: function() {
+                    alert("No estás logado!");
+                }
+            });
+        });
+        $('#logout').click(function() {
+            localStorage.clear();
+        });
+    });
+</script>
+</body>
+
+</html>
